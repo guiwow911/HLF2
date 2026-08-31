@@ -24,6 +24,20 @@ python3 -m http.server 3000      # 或任意静态服务器
 # 浏览器打开 http://localhost:3000
 ```
 
+## 部署
+
+纯静态站点，仓库根目录的 `index.html` 就是入口，任何静态托管开箱即用。
+
+| 方式 | 操作 |
+| --- | --- |
+| GitHub Pages | Settings → Pages → Deploy from a branch → 本分支 `/ (root)` → https://guiwow911.github.io/HLF2/ |
+| Netlify | 导入仓库即可（`netlify.toml` 已配好） |
+| Vercel | `npx vercel --prod`（`vercel.json` 已配好） |
+| Docker | `docker build -t hlf2 . && docker run -p 8080:80 hlf2` |
+| 单文件 | `python3 tools/build.py` → `dist/hlf2.html`（78 KB，双击即玩） |
+
+详见 [DEPLOY.md](DEPLOY.md)。
+
 ## 玩法
 
 戈登·弗里曼在黑山研究所遭遇共振级联事故。穿过三个区域活着出去。
