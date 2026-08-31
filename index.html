@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>HLF2 · 网页版半条命 极速版</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>λ</text></svg>">
+</head>
+<body>
+
+<div id="app">
+  <!-- ===== 3D 视口 ===== -->
+  <div id="viewport">
+    <canvas id="scene"></canvas>
+    <canvas id="fx"></canvas>
+
+    <div id="lockHint" class="hidden">点击画面锁定鼠标</div>
+
+    <!-- ===== HUD ===== -->
+    <div id="hud">
+      <div class="hud-top">
+        <div id="levelName">黑山研究所</div>
+        <div class="top-right">
+          <span class="lbl">得分</span><span id="score">0</span>
+          <span class="lbl">时间</span><span id="timer">00:00</span>
+        </div>
+      </div>
+
+      <canvas id="minimap" width="180" height="180"></canvas>
+
+      <div class="hud-bottom">
+        <div class="block">
+          <div class="lbl">生命</div>
+          <div id="hp" class="val">100</div>
+          <div class="bar"><i id="hpBar" style="width:100%"></i></div>
+        </div>
+        <div class="block">
+          <div class="lbl">HEV 护甲</div>
+          <div id="armor" class="val armorv">0</div>
+          <div class="bar armor"><i id="armorBar" style="width:0%"></i></div>
+        </div>
+        <div class="block wide">
+          <div class="lbl" id="weaponName">GLOCK 17</div>
+          <div class="ammoline"><span id="ammo" class="val">17</span><span id="ammoRes">/ 68</span></div>
+          <ul id="weaponList">
+            <li data-k="1"><b>1</b> 撬棍</li>
+            <li data-k="2"><b>2</b> 手枪</li>
+            <li data-k="3"><b>3</b> 霰弹枪</li>
+            <li data-k="4"><b>4</b> MP5</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="toast"></div>
+    </div>
+
+    <!-- ===== 覆盖层 ===== -->
+    <div id="loading" class="overlay">
+      <div class="panel">
+        <h1 class="logo">λ HLF2</h1>
+        <p>正在生成纹理与音效…</p>
+      </div>
+    </div>
+
+    <div id="menuScreen" class="overlay hidden">
+      <div class="panel wide-panel">
+        <h1 class="logo">λ HALF-LIFE <span>极速版</span></h1>
+        <p class="tag">BLACK MESA RESEARCH FACILITY · ANOMALOUS MATERIALS LAB</p>
+        <p class="story">
+          共振级联失控，Xen 生物涌入设施。你是戈登·弗里曼，穿着 HEV 防护服，
+          手里只有一把撬棍和一支手枪。穿过三个区域，活着走出黑山。
+        </p>
+
+        <div class="diffs">
+          <button data-diff="easy">简单</button>
+          <button data-diff="normal" class="sel">普通</button>
+          <button data-diff="hard">困难</button>
+        </div>
+
+        <button id="btnStart" class="big">开始游戏</button>
+
+        <div class="controls">
+          <div><b>W A S D</b> 移动</div><div><b>鼠标</b> 视角</div>
+          <div><b>左键 / 空格</b> 开火</div><div><b>Shift</b> 疾跑</div>
+          <div><b>Ctrl</b> 蹲下</div><div><b>1-4 / 滚轮</b> 换武器</div>
+          <div><b>R</b> 换弹</div><div><b>F</b> 手电</div>
+          <div><b>M</b> 静音</div><div><b>Esc</b> 暂停</div>
+        </div>
+        <p class="boot">资源生成耗时 <span id="bootTime">-</span> · 纯前端 · 无外部资源</p>
+      </div>
+    </div>
+
+    <div id="pauseScreen" class="overlay hidden">
+      <div class="panel">
+        <h2>已暂停</h2>
+        <label class="slider">鼠标灵敏度 <span id="sensVal">2.2</span>
+          <input id="sens" type="range" min="0.5" max="6" step="0.1" value="2.2">
+        </label>
+        <button id="btnResume" class="big">继续</button>
+        <button id="btnQuit" class="ghost">返回主菜单</button>
+      </div>
+    </div>
+
+    <div id="deadScreen" class="overlay hidden">
+      <div class="panel dead">
+        <h2>你 死 了</h2>
+        <p id="deadStats"></p>
+        <p class="hint">“无法维持生命体征…” — HEV 防护服</p>
+        <button id="btnRetry" class="big">重新开始本章</button>
+      </div>
+    </div>
+
+    <div id="endScreen" class="overlay hidden">
+      <div class="panel">
+        <h2 id="endTitle">章节完成</h2>
+        <p id="endStats"></p>
+        <p id="nextName" class="hint"></p>
+        <button id="btnNext" class="big">继续前进</button>
+      </div>
+    </div>
+
+    <div id="winScreen" class="overlay hidden">
+      <div class="panel">
+        <h2 class="win">逃 出 黑 山</h2>
+        <p id="winStats"></p>
+        <p class="hint">“干得漂亮，弗里曼博士……我们再联系。” — G-Man</p>
+        <button id="btnAgain" class="big">再玩一次</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/textures.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/maps.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
