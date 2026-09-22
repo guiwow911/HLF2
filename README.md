@@ -16,7 +16,12 @@ HLF2/
     └── game.js         # 引擎：光线投射、精灵排序、AI、武器、HUD
 ```
 
-## 运行
+## 立即游玩
+
+**<https://guiwow911.github.io/HLF2/>** —— 已部署在 GitHub Pages，浏览器打开即可玩，
+无需安装、无需联网下载资源。
+
+## 本地运行
 
 ```bash
 cd HLF2
@@ -30,7 +35,7 @@ python3 -m http.server 3000      # 或任意静态服务器
 
 | 方式 | 操作 |
 | --- | --- |
-| GitHub Pages | Settings → Pages → Deploy from a branch → 本分支 `/ (root)` → https://guiwow911.github.io/HLF2/ |
+| GitHub Pages | ✅ 已开启（`main` 分支 / 根目录）→ <https://guiwow911.github.io/HLF2/> |
 | Netlify | 导入仓库即可（`netlify.toml` 已配好） |
 | Vercel | `npx vercel --prod`（`vercel.json` 已配好） |
 | Docker | `docker build -t hlf2 . && docker run -p 8080:80 hlf2` |

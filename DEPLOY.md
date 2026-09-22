@@ -5,16 +5,21 @@
 
 ---
 
-## 方案 A：GitHub Pages（推荐，最省事）
+## 方案 A：GitHub Pages（✅ 已上线，直接用这个玩）
 
-当前 Arena 机器人 token 没有仓库 admin 权限，无法替你打开 Pages 开关，需要你点两下：
+Pages 已开启，配置为 **Source: `Deploy from a branch` → `main` / `(root)`**，
+最近一次构建状态 `built`。
 
-1. 打开 <https://github.com/guiwow911/HLF2/settings/pages>
-2. **Source** 选 `Deploy from a branch`
-3. **Branch** 选 `arena/01a056b9-hlf2`（或合并到 `main` 后选 `main`），目录选 `/ (root)`
-4. Save，等约 1 分钟
+**游玩地址 → <https://guiwow911.github.io/HLF2/>**
 
-上线地址：**https://guiwow911.github.io/HLF2/**
+单文件版直达（无需其他资源）→ <https://guiwow911.github.io/HLF2/dist/hlf2.html>
+
+怎么玩：用 Chrome / Edge / Firefox 打开上面的网址 → 点「开始游戏」→
+再点一下画面锁定鼠标 → `W A S D` 移动、鼠标转视角、左键开火。按 `Esc` 释放鼠标。
+
+以后改了游戏：把改动合并进 `main`，GitHub 会自动重新构建并发布，约 1 分钟后生效
+（刷新页面如果没变化，按 `Ctrl+Shift+R` 强刷）。改配置入口：
+<https://github.com/guiwow911/HLF2/settings/pages>
 
 > 仓库根已放好 `.nojekyll`，Jekyll 不会干扰静态资源。
 
